@@ -17,6 +17,8 @@ type EchoController struct {
 func (e *EchoController) Echo() {
 	defer e.ServeJSON()
 
+
+
 	body := make(map[string]interface{})
 
 	err := json.Unmarshal(e.Ctx.Input.RequestBody, &body)
