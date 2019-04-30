@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
 	"net/http"
@@ -10,14 +11,17 @@ type EchoController struct {
 	beego.Controller
 }
 
-// @router /:msg [post]
 func (e *EchoController) Echo() {
-	msg := e.Ctx.Input.Param(":msg")
-	responseData := fmt.Sprintf("Hello %s!", msg)
+	body := make(map[string]interface{})
+
+	err := json.Unmarshal(e.Ctx.Input.RequestBody, &body)
+	if err != nil {
+		panic(err)
+	}
+
+	responseData := fmt.Sprintf("Hello %s!", body["name"])
 
 	// TODO: Invocar al mediator
-
-	println("EchoController -> " + msg)
 
 	e.Ctx.Output.SetStatus(http.StatusOK)
 	e.Data["json"] = responseData
