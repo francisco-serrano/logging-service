@@ -1,2 +1,5 @@
+init_dev:
+	bee run
+
 devshell:
-	docker-compose run logging-service bash
+	docker-compose run --service-ports logging-service bash
