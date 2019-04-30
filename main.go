@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fmt.Println("hola logging-services")
+	fmt.Println("iniciando logging-services")
 
 	beego.Run()
 }
