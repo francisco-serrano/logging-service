@@ -6,9 +6,13 @@ services:
       context: .
       dockerfile: Dockerfile
 
+    volumes:
+      - ./:/root/go/src/github.com/poc/logging-service
+
     extra_hosts:
       - "github.com:192.30.253.112"
       - "assets-cdn.github.com:151.101.84.133"
       - "api.github.com:192.30.253.117"
       - "live.github.com:192.30.253.124"
       - "gist.github.com:192.30.253.118"
+

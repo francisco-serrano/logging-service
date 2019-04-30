@@ -9,7 +9,7 @@ func init() {
 	//beego.Router("/echo", &controllers.EchoController{}, "get:Echo")
 
 	ns := beego.NewNamespace("/logging-service",
-		beego.NSRouter("/echo", &controllers.EchoController{}, "get:Echo"),
+		beego.NSRouter("/echo/:msg", &controllers.EchoController{}, "post:Echo"),
 	)
 
 	beego.AddNamespace(ns)
