@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/poc/logging-service/mediators"
 	"net/http"
 )
 
@@ -19,11 +19,18 @@ func (e *EchoController) Echo() {
 		panic(err)
 	}
 
-	responseData := fmt.Sprintf("Hello %s!", body["name"])
-
-	// TODO: Invocar al mediator
+	responseData, err := echoMediator(body)
+	if err != nil {
+		panic(err)
+	}
 
 	e.Ctx.Output.SetStatus(http.StatusOK)
-	e.Data["json"] = responseData
+	e.Data["json"] = responseData.Message
 	e.ServeJSON()
+}
+
+func echoMediator(bodyDict map[string]interface{}) (mediators.Response, error){
+	mediator := mediators.NewEchoMediator(bodyDict)
+
+	return *mediator, nil
 }
