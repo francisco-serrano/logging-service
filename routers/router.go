@@ -3,6 +3,7 @@ package routers
 import (
 	"github.com/astaxie/beego"
 	"github.com/poc/logging-service/controllers"
+	"github.com/poc/logging-service/filters"
 )
 
 func init() {
@@ -11,4 +12,11 @@ func init() {
 	)
 
 	beego.AddNamespace(ns)
+
+	InitializeFilters()
+}
+
+func InitializeFilters() {
+	beego.InsertFilter("/logging-service/echo", beego.BeforeRouter, filters.InsertTimestamp)
+	beego.InsertFilter("/logging-service/echo", beego.AfterExec, filters.ComputeRequestTimestamp, false)
 }

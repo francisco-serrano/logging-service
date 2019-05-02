@@ -8,6 +8,12 @@
   version = "v1.11.1"
 
 [[projects]]
+  name = "github.com/google/uuid"
+  packages = ["."]
+  revision = "0cd6bf5da1e1c83f8b45653022c74f71af0538a4"
+  version = "v1.1.1"
+
+[[projects]]
   name = "github.com/konsorten/go-windows-terminal-sequences"
   packages = ["."]
   revision = "f55edac94c9bbba5d6182a4be46d86a2c9b5b50e"
@@ -58,6 +64,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8fb2d99d616caa6c3e51d617cdfd8a067d3f375befc87fc213acb3654c808463"
+  inputs-digest = "ec38c4a844079d46f333334c11269539d8f951930cdf590d8a8d3ebada11bcdf"
   solver-name = "gps-cdcl"
   solver-version = 1
