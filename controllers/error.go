@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"fmt"
+	"errors"
 	"github.com/astaxie/beego"
-	"github.com/pkg/errors"
+	"github.com/poc/logging-service/filters"
 	"github.com/poc/logging-service/utils"
 )
 
@@ -12,10 +12,18 @@ type ErrorController struct {
 	RC utils.ResponseComposer
 }
 
-func (e *ErrorController) Error404() {
-	err := utils.ErrorNotFound(errors.New("invalid URL"))
-	e.RC.SetErrorResponse(&e.Controller, utils.GetStatusErrorCode(err), err)
-	fmt.Println(err)
+type Mensaje struct {
+	Id        int
+	Contenido string
+}
 
-	e.ServeJSON()
+func (e *ErrorController) Error404() {
+	defer e.ServeJSON()
+
+	err := utils.ErrorNotFound(errors.New("invalid URL"))
+
+	e.EnableRender = false
+	e.RC.SetErrorResponse(&e.Controller, utils.GetStatusErrorCode(err), err)
+
+	filters.LogRequestMetadata(e.Ctx)
 }

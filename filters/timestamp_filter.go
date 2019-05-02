@@ -18,7 +18,7 @@ func InsertMetadata(ctx *context.Context) {
 func LogRequestMetadata(ctx *context.Context) {
 	correlationId := ctx.Request.Header.Get("correlation-id")
 	initialTimestamp := ctx.Request.Header.Get("initial-timestamp")
-	currentTimestamp, err :=  strconv.ParseInt(initialTimestamp, 10, 64)
+	currentTimestamp, err := strconv.ParseInt(initialTimestamp, 10, 64)
 
 	if err != nil {
 		panic(err)
@@ -27,9 +27,10 @@ func LogRequestMetadata(ctx *context.Context) {
 	difference := time.Now().UnixNano() - currentTimestamp
 
 	log.WithFields(log.Fields{
-		"method": ctx.Request.Method,
-		"path": ctx.Request.URL.Path,
-		"correlation-id": correlationId,
+		"method":            ctx.Request.Method,
+		"path":              ctx.Request.URL.Path,
+		"statusCode":        ctx.ResponseWriter.Status,
+		"correlation-id":    correlationId,
 		"initial-timestamp": initialTimestamp,
 		"current-timestamp": currentTimestamp,
 		"difference":        difference,

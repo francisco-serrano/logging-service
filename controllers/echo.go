@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/poc/logging-service/mediators"
 	"github.com/poc/logging-service/utils"
@@ -23,7 +22,7 @@ func (e *EchoController) Echo() {
 	if err != nil {
 		err := utils.ErrorInvalidData(err)
 		e.RC.SetErrorResponse(&e.Controller, utils.GetStatusErrorCode(err), err)
-		fmt.Println(err) // TODO: usar logrus
+		e.Ctx.Output.SetStatus(http.StatusBadRequest)
 		return
 	}
 
