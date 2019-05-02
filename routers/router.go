@@ -17,6 +17,6 @@ func init() {
 }
 
 func InitializeFilters() {
-	beego.InsertFilter("/logging-service/echo", beego.BeforeRouter, filters.InsertTimestamp)
-	beego.InsertFilter("/logging-service/echo", beego.AfterExec, filters.ComputeRequestTimestamp, false)
+	beego.InsertFilter("/logging-service/echo", beego.BeforeRouter, filters.InsertMetadata)
+	beego.InsertFilter("/logging-service/echo", beego.AfterExec, filters.LogRequestMetadata, false)
 }

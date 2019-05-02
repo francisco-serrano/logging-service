@@ -8,14 +8,14 @@ import (
 	"time"
 )
 
-func InsertTimestamp(ctx *context.Context) {
+func InsertMetadata(ctx *context.Context) {
 	timestamp := strconv.FormatInt(time.Now().UnixNano(), 10)
 
 	ctx.Request.Header.Add("correlation-id", uuid.New().String())
 	ctx.Request.Header.Add("initial-timestamp", timestamp)
 }
 
-func ComputeRequestTimestamp(ctx *context.Context) {
+func LogRequestMetadata(ctx *context.Context) {
 	correlationId := ctx.Request.Header.Get("correlation-id")
 	initialTimestamp := ctx.Request.Header.Get("initial-timestamp")
 	currentTimestamp, err :=  strconv.ParseInt(initialTimestamp, 10, 64)
@@ -27,9 +27,11 @@ func ComputeRequestTimestamp(ctx *context.Context) {
 	difference := time.Now().UnixNano() - currentTimestamp
 
 	log.WithFields(log.Fields{
+		"method": ctx.Request.Method,
+		"path": ctx.Request.URL.Path,
 		"correlation-id": correlationId,
 		"initial-timestamp": initialTimestamp,
 		"current-timestamp": currentTimestamp,
 		"difference":        difference,
-	}).Info("REQUEST_TIMESTAMP")
+	}).Info("REQUEST_INFO")
 }
